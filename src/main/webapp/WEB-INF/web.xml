@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         id="WebApp_ID" version="3.0"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    
+
+    <!-- ============================================================== -->
+    <!-- Resources -->
+    <!-- ============================================================== -->
+
+    <resource-ref>
+        <res-ref-name>PasswordStorage</res-ref-name>
+        <res-type>com.sap.cloud.security.password.PasswordStorage</res-type>
+    </resource-ref>
+
+
+    <!-- ============================================================== -->
+    <!-- Destinations -->
+    <!-- ============================================================== -->
+
+    <resource-ref>
+        <res-ref-name>connectivityConfiguration</res-ref-name>
+        <res-type>com.sap.core.connectivity.api.configuration.ConnectivityConfiguration</res-type>
+    </resource-ref>
+
+    <resource-ref>
+        <res-ref-name>TenantContext</res-ref-name>
+        <res-type>com.sap.cloud.account.TenantContext</res-type>
+    </resource-ref>
+
+    <resource-ref>
+        <res-ref-name>authHeaderProvider</res-ref-name>
+        <res-type>com.sap.core.connectivity.api.authentication.AuthenticationHeaderProvider</res-type>
+    </resource-ref>
+
+  <resource-ref>
+    <res-ref-name>user/Provider</res-ref-name>
+    <res-type>com.sap.security.um.user.UserProvider</res-type>
+  </resource-ref>
+
+    <!-- ============================================================== -->
+    <!-- Security -->
+    <!-- ============================================================== -->
+    
+	<login-config>
+        <auth-method>FORM</auth-method>
+    </login-config>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Employee area</web-resource-name>
+            <url-pattern>/copilot/*</url-pattern>
+            <url-pattern>/test/*</url-pattern>
+            <url-pattern>/webjars/*</url-pattern>
+            <url-pattern>/swagger-ui.html/*</url-pattern>
+            <url-pattern>/activity/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>r_employee</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin area</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>r_admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+    
+
+    <security-role>
+        <description>SAP Employees</description>
+        <role-name>r_employee</role-name>
+    </security-role>
+
+    <security-role>
+        <description>Admins</description>
+        <role-name>r_admin</role-name>
+    </security-role>
+    
+</web-app>
